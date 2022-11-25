@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.com.animaltracker.databinding.CardPlacemarkBinding
+import org.com.animaltracker.databinding.CardAnimalBinding
 import org.com.animaltracker.model.AnimalModel
 
 interface AnimalListener {
@@ -17,7 +17,7 @@ class AnimalAdapter constructor(private var animals: List<AnimalModel>,
     RecyclerView.Adapter<AnimalAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardPlacemarkBinding
+        val binding = CardAnimalBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
@@ -30,7 +30,7 @@ class AnimalAdapter constructor(private var animals: List<AnimalModel>,
 
     override fun getItemCount(): Int = animals.size
 
-    class MainHolder(private val binding : CardPlacemarkBinding) :
+    class MainHolder(private val binding : CardAnimalBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(animal: AnimalModel, listener: AnimalListener) {
