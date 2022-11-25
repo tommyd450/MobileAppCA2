@@ -3,6 +3,7 @@ package org.com.animaltracker.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.com.animaltracker.databinding.CardPlacemarkBinding
 import org.com.animaltracker.model.AnimalModel
 
@@ -33,8 +34,11 @@ class AnimalAdapter constructor(private var animals: List<AnimalModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(animal: AnimalModel, listener: AnimalListener) {
-            binding.placemarkTitle.text = animal.title
+            binding.animalTitle.text = animal.title
             binding.description.text = animal.description
+            Picasso.get()
+                .load(animal.image)
+                .into(binding.animalImage)
             binding.root.setOnClickListener { listener.onAnimalClick(animal) }
             binding.buttonDelete.setOnClickListener()
             {

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Placemark</string>
-    <string name="button_addPlacemark">Add Placemark</string>
-    <string name="button_editPlacemark">Save Placemark</string>>
-    <string name="hint_placemarkTitle">Placemark Title</string>
-    <string name="hint_placemarkDescription">Placemark Description</string>
+    <string name="app_name">Animal Tracker</string>
+    <string name="button_addAnimal">Add Animal</string>
+    <string name="button_editAnimal">Save Animal</string>>
+    <string name="hint_animalTitle">Animal Species</string>
+    <string name="hint_animalDescription">Animal Description</string>
     <string name="title_activity_placemark_list">PlacemarkListActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -25,6 +25,7 @@
     <string name="cardDelete">Delete</string>>
 
     <string name="button_addImage"> Add Image </string>
+    <string name="button_editImage"> Update Image </string>
 
-    <string name="select_placemark_image">Select placemark image</string>
+    <string name="select_animal_image">Select Animal image</string>
 </resources>

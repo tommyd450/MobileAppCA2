@@ -31,29 +31,36 @@ class AnimalActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
-        i("Placemark Activity started...")
+        i("Animal Activity started...")
 
-        if (intent.hasExtra("placemark_edit")) {
-            animal = intent.extras?.getParcelable("placemark_edit")!!
-            binding.placemarkTitle.setText(animal.title)
-            binding.placemarkDescription.setText(animal.description)
-            binding.btnAdd.setText(R.string.button_editPlacemark)
+        if (intent.hasExtra("animal_edit")) {
+            animal = intent.extras?.getParcelable("animal_edit")!!
+            binding.animalSpecies.setText(animal.title)
+            binding.animalDescription.setText(animal.description)
+            Picasso.get()
+                .load(animal.image)
+                .into(binding.animalImage)
+            binding.btnAdd.setText(R.string.button_editAnimal)
+            binding.chooseImage.setText(R.string.button_editImage)
         }
 
 
 
         binding.btnAdd.setOnClickListener() {
-            animal.title = binding.placemarkTitle.text.toString()
-            animal.description = binding.placemarkDescription.text.toString()
-            if (animal.title.isNotEmpty() && !intent.hasExtra("placemark_edit")) {
+            animal.title = binding.animalSpecies.text.toString()
+            animal.description = binding.animalDescription.text.toString()
+
+            //animal.image = binding.animalImage.
+            if (animal.title.isNotEmpty() && !intent.hasExtra("animal_edit")) {
                 app.animals.create(animal.copy())
                 i("add Button Pressed: ${animal}")
                 // for (i in app.placemarks.findAll().indices)
                 // { i("Placemark[$i]:${this.app.placemarks.[i]}") }
+
                 setResult(RESULT_OK)
                 finish()
             }
-            else if(animal.title.isNotEmpty() && intent.hasExtra("placemark_edit")){
+            else if(animal.title.isNotEmpty() && intent.hasExtra("animal_edit")){
                 app.animals.update(animal)
                 i("Update/Save Button Pressed: ${animal}")
                 setResult(RESULT_OK)
@@ -95,7 +102,7 @@ class AnimalActivity : AppCompatActivity() {
                             animal.image = result.data!!.data!!
                             Picasso.get()
                                 .load(animal.image)
-                                .into(binding.placemarkImage)
+                                .into(binding.animalImage)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

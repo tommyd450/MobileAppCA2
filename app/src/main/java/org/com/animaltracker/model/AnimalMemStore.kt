@@ -27,6 +27,7 @@ class AnimalMemStore : AnimalStore {
         if (foundAnimal != null) {
             foundAnimal.title = animal.title
             foundAnimal.description = animal.description
+            foundAnimal.image = animal.image
             logAll()
         }
     }

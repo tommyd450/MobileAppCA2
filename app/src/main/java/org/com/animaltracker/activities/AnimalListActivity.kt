@@ -57,13 +57,14 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
 
     override fun onAnimalClick(animal: AnimalModel) {
         val launcherIntent = Intent(this, AnimalActivity::class.java)
-        launcherIntent.putExtra("placemark_edit", animal)
+        launcherIntent.putExtra("animal_edit", animal)
         getClickResult.launch(launcherIntent)
     }
 
     override fun onDeleteButtonClick(animal: AnimalModel) {
         val launcherIntent = Intent(this, AnimalListActivity::class.java)
         app.animals.delete(animal)
+        finish()
         getClickResult.launch(launcherIntent)
     }
 
