@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647600426868",
+    "project_id": "androidappmobileapp",
+    "storage_bucket": "androidappmobileapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647600426868:android:a9ef468eebf9af6b7a6621",
+        "android_client_info": {
+          "package_name": "org.com.animaltracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647600426868-vbpb9o2agcneht3kvin4of1q67tpjque.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcb6ZvVpMTciiiOLza8gg2L9sSQl8vioY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647600426868-vbpb9o2agcneht3kvin4of1q67tpjque.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
