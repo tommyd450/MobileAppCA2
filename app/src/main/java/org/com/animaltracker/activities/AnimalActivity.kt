@@ -15,12 +15,14 @@ import org.com.animaltracker.databinding.ActivityAnimalBinding
 import org.com.animaltracker.helpers.showImagePicker
 import org.com.animaltracker.main.MainApp
 import org.com.animaltracker.model.AnimalModel
+import org.com.animaltracker.activities.MapActivity
 import timber.log.Timber.i
 
 class AnimalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnimalBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var animal = AnimalModel()
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +78,13 @@ class AnimalActivity : AppCompatActivity() {
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
         }
+
+        binding.animalLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+            mapIntentLauncher.launch(launcherIntent)
+        }
         registerImagePickerCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -108,6 +116,12 @@ class AnimalActivity : AppCompatActivity() {
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
     }
 
 }
