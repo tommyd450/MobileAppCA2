@@ -16,6 +16,7 @@ import org.com.animaltracker.helpers.showImagePicker
 import org.com.animaltracker.main.MainApp
 import org.com.animaltracker.model.AnimalModel
 import org.com.animaltracker.activities.MapActivity
+import org.com.animaltracker.model.Location
 import timber.log.Timber.i
 
 class AnimalActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class AnimalActivity : AppCompatActivity() {
     var animal = AnimalModel()
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     lateinit var app: MainApp
+    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +58,7 @@ class AnimalActivity : AppCompatActivity() {
             if (animal.title.isNotEmpty() && !intent.hasExtra("animal_edit")) {
                 app.animals.create(animal.copy())
                 i("add Button Pressed: ${animal}")
-                // for (i in app.placemarks.findAll().indices)
-                // { i("Placemark[$i]:${this.app.placemarks.[i]}") }
+
 
                 setResult(RESULT_OK)
                 finish()
@@ -80,8 +81,21 @@ class AnimalActivity : AppCompatActivity() {
         }
 
         binding.animalLocation.setOnClickListener {
-            val launcherIntent = Intent(this, MapActivity::class.java)
-            mapIntentLauncher.launch(launcherIntent)
+            if(intent.hasExtra("animal_edit"))
+            {
+                val location = animal.location
+                val launcherIntent = Intent(this, MapActivity::class.java)
+                    .putExtra("location", location)
+                mapIntentLauncher.launch(launcherIntent)
+
+            }else if (!intent.hasExtra("animal_edit"))
+            {
+                val location = animal.location
+                val launcherIntent = Intent(this, MapActivity::class.java)
+                    .putExtra("location", location)
+                mapIntentLauncher.launch(launcherIntent)
+
+            }
         }
         registerImagePickerCallback()
         registerMapCallback()
@@ -121,7 +135,18 @@ class AnimalActivity : AppCompatActivity() {
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { i("Map Loaded") }
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            animal.location = location
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> {} else -> {}
+                }
+            }
     }
-
 }
