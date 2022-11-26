@@ -77,7 +77,7 @@ class AnimalActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
 
         binding.animalLocation.setOnClickListener {
@@ -121,10 +121,16 @@ class AnimalActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            animal.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            animal.image = image
+
                             Picasso.get()
                                 .load(animal.image)
                                 .into(binding.animalImage)
+                            binding.chooseImage.setText(R.string.select_animal_image)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
