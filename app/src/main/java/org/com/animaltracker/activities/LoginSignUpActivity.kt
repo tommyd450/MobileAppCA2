@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.com.animaltracker.R
@@ -14,16 +15,8 @@ import timber.log.Timber
 class LoginSignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginSignUpBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var user : FirebaseUser
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            //reload();
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +28,9 @@ class LoginSignUpActivity : AppCompatActivity() {
 
         binding.login.setOnClickListener()
         {
-            val currentUser = signIn(binding.email.toString(),binding.password.toString())
-            if(currentUser != null){
+            signIn(binding.email.text.toString(),binding.password.text.toString())
+            Timber.i("here"+auth.currentUser)
+            if(auth.currentUser!=null){
                 Timber.i("Button Pressed")
                 val launcherIntent = Intent(this, AnimalListActivity::class.java)
                 startActivity(launcherIntent)
@@ -54,7 +48,8 @@ class LoginSignUpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     //Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
+                    user = auth.currentUser!!
+
                     //updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -73,9 +68,10 @@ class LoginSignUpActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    ///Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                    //updateUI(user)
+                    //Log.d(TAG, "signInWithEmail:success")
+                    ///user = task.result.user
+                    Timber.i("Button Pressed"+task.result)
+
                 } else {
                     // If sign in fails, display a message to the user.
                     //Log.w(TAG, "signInWithEmail:failure", task.exception)
