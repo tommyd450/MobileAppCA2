@@ -9,6 +9,9 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.com.animaltracker.R
 import org.com.animaltracker.databinding.ActivityAnimalBinding
@@ -24,6 +27,7 @@ class AnimalActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var animal = AnimalModel()
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var auth: FirebaseAuth
     lateinit var app: MainApp
     var location = Location(52.245696, -7.139102, 15f)
 
@@ -33,6 +37,7 @@ class AnimalActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
+        auth = Firebase.auth
 
         app = application as MainApp
         i("Animal Activity started...")
@@ -41,6 +46,7 @@ class AnimalActivity : AppCompatActivity() {
             animal = intent.extras?.getParcelable("animal_edit")!!
             binding.animalSpecies.setText(animal.title)
             binding.animalDescription.setText(animal.description)
+            binding.visibility.isChecked= animal.publicVisibility
             Picasso.get()
                 .load(animal.image)
                 .into(binding.animalImage)
@@ -53,6 +59,9 @@ class AnimalActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             animal.title = binding.animalSpecies.text.toString()
             animal.description = binding.animalDescription.text.toString()
+            animal.genus = binding.animalGenus.text.toString()
+            animal.publicVisibility = binding.visibility.isChecked
+            animal.uid = auth.currentUser!!.uid
 
             //animal.image = binding.animalImage.
             if (animal.title.isNotEmpty() && !intent.hasExtra("animal_edit")) {
