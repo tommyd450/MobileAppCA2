@@ -4,7 +4,11 @@
     <string name="button_editAnimal">Save Animal</string>>
     <string name="hint_animalTitle">Animal Species</string>
     <string name="hint_animalDescription">Animal Description</string>
+    <string name="hint_animalGenus">Animal Genus (Auto Filled)</string>
     <string name="title_activity_placemark_list">PlacemarkListActivity</string>
+
+    <string name="autfillinfo">AutoFill Extra information</string>
+    <string name="setvisibiliy">Public Visibility</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -32,4 +36,11 @@
     <string name="title_activity_map">MapActivity</string>
 
 
+    <!--Login Page Strings -->
+    <string name="emailField">Enter your email here</string>
+    <string name="passwordField">Enter your password here</string>
+    <string name="loginButton">Login</string>
+    <string name="signUpButton">Create an account</string>
+
+    <string name="logout">Logout</string>>
 </resources>

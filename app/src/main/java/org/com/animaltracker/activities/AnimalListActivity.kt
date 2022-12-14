@@ -8,16 +8,21 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.com.animaltracker.R
 import org.com.animaltracker.adapters.AnimalAdapter
 import org.com.animaltracker.adapters.AnimalListener
 import org.com.animaltracker.databinding.ActivityAnimalListBinding
 import org.com.animaltracker.main.MainApp
 import org.com.animaltracker.model.AnimalModel
+import org.com.animaltracker.activities.LoginSignUpActivity
 
 class AnimalListActivity : AppCompatActivity(), AnimalListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityAnimalListBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +30,14 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
+        auth = LoginSignUpActivity().auth
         app = application as MainApp
         val layoutManager = LinearLayoutManager(this)
+
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = AnimalAdapter(app.animals.findAll(),this)
+        binding.recyclerView.adapter = AnimalAdapter(app.animals.findAllUser(auth.currentUser!!.uid),this)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -38,8 +46,15 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
+
                 val launcherIntent = Intent(this, AnimalActivity::class.java)
                 getResult.launch(launcherIntent)
+            }
+            R.id.item_logout ->{
+
+                val launcherIntent = Intent(this, LoginSignUpActivity::class.java)
+                getResult.launch(launcherIntent)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -49,9 +64,9 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
+
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.animals.findAll().size)
+                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0,app.animals.findAllUser(auth.currentUser!!.uid).size)
             }
         }
 
@@ -62,10 +77,8 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
     }
 
     override fun onDeleteButtonClick(animal: AnimalModel) {
-        val launcherIntent = Intent(this, AnimalListActivity::class.java)
         app.animals.delete(animal)
-        finish()
-        getClickResult.launch(launcherIntent)
+        binding.recyclerView.adapter = AnimalAdapter(app.animals.findAllUser(auth.currentUser!!.uid),this)
     }
 
     private val getClickResult =
@@ -73,8 +86,7 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.animals.findAll().size)
+                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0,app.animals.findAllUser(auth.currentUser!!.uid).size)
             }
         }
 }

@@ -6,8 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AnimalModel(var id: Long = 0,
+                          var uid: String = "",
+                          var publicVisibility: Boolean = false,
                           var title: String = "",
                           var description: String = "",
+                          var genus: String = "",
                           var image: Uri = Uri.EMPTY,
                           var location: Location = Location(52.245696, -7.139102, 15f)  ) : Parcelable
 

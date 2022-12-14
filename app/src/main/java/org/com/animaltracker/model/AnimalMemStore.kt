@@ -16,6 +16,11 @@ class AnimalMemStore : AnimalStore {
         return animals
     }
 
+    override fun findAllUser(uid: String): List<AnimalModel> {
+        //
+        return  animals
+    }
+
     override fun create(animal: AnimalModel) {
         animal.id = getId()
         animals.add(animal)

@@ -21,6 +21,7 @@ fun generateRandomId(): Long {
 
 class AnimalJSONStore(private val context: Context) : AnimalStore {
     var animals = mutableListOf<AnimalModel>()
+    var useranimals = mutableListOf<AnimalModel>()
 
     init {
         if (exists(context, JSON_FILE)) {
@@ -30,6 +31,7 @@ class AnimalJSONStore(private val context: Context) : AnimalStore {
 
     override fun findAll(): MutableList<AnimalModel> {
         logAll()
+
         return animals
     }
 
@@ -72,6 +74,13 @@ class AnimalJSONStore(private val context: Context) : AnimalStore {
 
     private fun logAll() {
         animals.forEach { Timber.i("$it") }
+    }
+
+    override fun findAllUser(uid: String): MutableList<AnimalModel> {
+        useranimals.clear()
+        useranimals.addAll(animals)
+        useranimals.removeAll {it.uid != uid}
+        return useranimals
     }
 }
 
