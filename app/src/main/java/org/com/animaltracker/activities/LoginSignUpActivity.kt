@@ -14,17 +14,18 @@ import timber.log.Timber
 
 class LoginSignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginSignUpBinding
-    private lateinit var auth: FirebaseAuth
+    var auth: FirebaseAuth = Firebase.auth
     //private lateinit var user : FirebaseUser
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityLoginSignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
-
+        //auth = Firebase.auth
+        auth.signOut()
 
         binding.login.setOnClickListener()
         {

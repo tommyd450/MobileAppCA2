@@ -23,6 +23,9 @@ class AnimalAdapter constructor(private var animals: List<AnimalModel>,
         return MainHolder(binding)
     }
 
+
+
+
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val animal = animals[holder.adapterPosition]
         holder.bind(animal, listener)

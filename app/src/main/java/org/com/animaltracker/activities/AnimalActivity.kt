@@ -70,12 +70,12 @@ class AnimalActivity : AppCompatActivity() {
 
 
                 setResult(RESULT_OK)
+
                 finish()
             }
             else if(animal.title.isNotEmpty() && intent.hasExtra("animal_edit")){
                 app.animals.update(animal)
                 i("Update/Save Button Pressed: ${animal}")
-                setResult(RESULT_OK)
                 finish()
             }
 
