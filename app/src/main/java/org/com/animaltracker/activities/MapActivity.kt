@@ -51,6 +51,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         location.lng = marker.position.longitude
         location.zoom = map.cameraPosition.zoom
 
+
     }
 
     override fun onMarkerDragStart(p0: Marker) {  }

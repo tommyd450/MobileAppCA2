@@ -56,6 +56,11 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
                 getResult.launch(launcherIntent)
                 finish()
             }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, AnimalMapActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -89,4 +94,9 @@ class AnimalListActivity : AppCompatActivity(), AnimalListener {
                 (binding.recyclerView.adapter)?.notifyItemRangeChanged(0,app.animals.findAllUser(auth.currentUser!!.uid).size)
             }
         }
+
+    private val mapIntentLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        )    { }
 }

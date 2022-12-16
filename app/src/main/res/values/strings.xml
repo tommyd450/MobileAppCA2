@@ -17,8 +17,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="menu_addPlacemark">Add</string>
-    <string name="menu_cancelPlacemark">Cancel</string>
+    <string name="menu_addAnimal">Add</string>
+    <string name="menu_cancelAnimal">Cancel</string>
     <string name="add_title">Please add a title</string>
     <string name="add_desc">Please add a description</string>
     <string name="edit_desc">Please edit description</string>
@@ -42,5 +42,6 @@
     <string name="loginButton">Login</string>
     <string name="signUpButton">Create an account</string>
 
-    <string name="logout">Logout</string>>
+    <string name="logout">Logout</string>
+    >
 </resources>
