@@ -8,6 +8,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.com.animaltracker.R
 
@@ -17,7 +20,7 @@ import org.com.animaltracker.main.MainApp
 import org.com.animaltracker.model.AnimalModel
 
 class AnimalMapActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
-
+    var auth: FirebaseAuth = Firebase.auth
     private lateinit var binding: ActivityAnimalMapBinding
     private lateinit var contentBinding: ContentAnimalMapBinding
     lateinit var map: GoogleMap
@@ -40,7 +43,7 @@ class AnimalMapActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
     }
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
-        app.animals.findAll().forEach {
+        app.animals.findAllUser(auth.currentUser!!.uid).forEach {
             val loc = LatLng(it.location.lat, it.location.lng)
             val options = MarkerOptions().title(it.title).position(loc)
             val genus = MarkerOptions().title(it.genus).position(loc)
